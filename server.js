@@ -8,6 +8,7 @@ const http = require('http');
 const dotenv = require('dotenv');
 const { Server } = require('socket.io');
 const bindRoutes = require('./bindRoutes');
+const SocketSingleton = require('./services/socket.js')
 
 dotenv.config();
 
@@ -39,3 +40,10 @@ const server = http.createServer(app);
 server.listen(PORT, () => {
   console.log(`Stamps server listening on port ${PORT}`);
 });
+
+// Initialize socket singleton for the first time
+const socket = new SocketSingleton(server);
+const socketInstance = SocketSingleton.getSocketInstance();
+
+// assigns the socketService name to SocketService.
+app.set('socketService', socketInstance);
