@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable import/extensions */
+require('./flow/config.js')
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');

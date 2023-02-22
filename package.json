@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "stamps-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.2.3",
+    "@onflow/fcl": "^1.3.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
