@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/extensions
-import dotenv from 'dotenv';
-import { mainnetAddresses, testnetAddresses } from '../globals/flowAddresses.js';
+const dotenv = require('dotenv');
+const { mainnetAddresses, testnetAddresses } = require('../globals/flowAddresses.js');
 
 dotenv.config();
 

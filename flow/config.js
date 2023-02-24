@@ -1,5 +1,5 @@
-import { config } from '@onflow/fcl';
-import envConfig from '../config/envConfig.js'
+const { config } = require('@onflow/fcl');
+const envConfig = require('../config/envConfig.js')
 
 config({
   'accessNode.api': envConfig.flowAccessNodeApi, 
