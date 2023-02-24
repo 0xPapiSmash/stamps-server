@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable import/extensions */
-require('./flow/config.js')
+require('./flow/config.js');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const { Server } = require('socket.io');
 const bindRoutes = require('./bindRoutes');
-const SocketSingleton = require('./services/socket.js')
+const SocketSingleton = require('./services/socket.js');
 
 dotenv.config();
 
