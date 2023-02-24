@@ -43,4 +43,4 @@ const currentEnv = () => {
   return 'development';
 };
 
-export default env[currentEnv()];
+module.exports = env[currentEnv()];

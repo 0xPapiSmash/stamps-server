@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router({ mergeParams: true });
 
-export default function flowRouter(controller) {
+module.exports = function flowRouter(controller) {
   router.post(
     // change to `/users/:userId/collections/:collectionId/create-fund-deploy` in v2
     '/create-fund-deploy',
@@ -16,4 +16,4 @@ export default function flowRouter(controller) {
   // );
 
   return router;
-}
+};

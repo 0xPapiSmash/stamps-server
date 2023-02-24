@@ -40,4 +40,4 @@ class SocketService {
   }
 }
 
-export default SocketService;
+module.exports = SocketService;

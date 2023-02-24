@@ -13,4 +13,4 @@ class SocketSingleton {
     return SocketSingleton.instance;
   }
 }
-export default SocketSingleton;
+module.exports = SocketSingleton;

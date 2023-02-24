@@ -89,4 +89,4 @@ class FlowService {
   }
 }
 
-export default { FlowService };
+module.exports = { FlowService };
