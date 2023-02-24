@@ -46,38 +46,25 @@ async function createNewCollection(
     }]);
   if (status !== 201) {
     throw Error('Error creating collection', error);
-  } else {
-    return data[0].id;
   }
 }
 
-async function updateCollectionContractDeployStatus(
-  table,
+async function updateCollectionDeployStatus(
   collectionId,
   collectionContractDeployStatus,
 ) {
-  try {
-
-  } catch (error) {
-    return console.log('Error updating collection', error);
+  const { status, error } = await supabase
+    .from('collections')
+    .update({ collection_deploy_status: collectionContractDeployStatus })
+    .eq('id', collectionId);
+  if (status !== 204) {
+    throw Error("Error updating collection's deploy status", error);
   }
-
-  // ---postgres version---
-  // return await collectionModel.update(
-  //   {
-  //     collectionContractDeployStatus,
-  //   },
-  //   {
-  //     where: {
-  //       id: collectionId,
-  //     },
-  //   },
-  // );
 }
 
 module.exports = {
   getAllCollectionDataByUserId,
   getCollectionById,
   createNewCollection,
-  updateCollectionContractDeployStatus,
+  updateCollectionDeployStatus,
 };
