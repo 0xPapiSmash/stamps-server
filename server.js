@@ -6,6 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const http = require('http');
 const dotenv = require('dotenv');
+const path = require('path');
 const { Server } = require('socket.io');
 const bindRoutes = require('./bindRoutes');
 const SocketSingleton = require('./services/socket.js')
@@ -21,6 +22,7 @@ const corsOptions = {
 const app = express();
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname, 'public'))); // to load files in public directory
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');

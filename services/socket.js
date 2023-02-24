@@ -1,4 +1,4 @@
-import SocketService from '../utils/socketUtils/socketService';
+const SocketService = require('../utils/socketUtils/socketService');
 
 class SocketSingleton {
   constructor(server) {

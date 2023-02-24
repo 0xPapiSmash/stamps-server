@@ -1,7 +1,7 @@
-import { Server } from 'socket.io';
-import {
+const { Server } = require('socket.io');
+const {
   JOIN_ROOM, JOINED_ROOM,
-} from '../../globals/socketIoTags.js';
+} = require('../../globals/socketIoTags');
 
 // Class that contains logic and functions to deal with sockets
 class SocketService {

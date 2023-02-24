@@ -1,10 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
 module.exports = class HealthCheckController {
-  constructor(name) {
-    this.name = name;
-  }
-
   healthCheck(req, res) {
     try {
       return res.send("Sikrit's server is running");

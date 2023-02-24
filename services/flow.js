@@ -1,9 +1,10 @@
-import * as fcl from "@onflow/fcl";
-import { SHA3 } from "sha3";
-import pkg from "elliptic";
+const fcl = require('@onflow/fcl');
+const { SHA3 } = require('sha3');
+const pkg = require('elliptic');
+
 const { ec: EC } = pkg;
 
-const ec = new EC("p256");
+const ec = new EC('p256');
 
 class FlowService {
   constructor(minterFlowAddress, minterPrivateKeyHex, minterAccountIndex) {
@@ -12,51 +13,47 @@ class FlowService {
     this.minterAccountIndex = minterAccountIndex;
   }
 
-  authorizeMinter = () => {
-    return async (account) => {
-      const user = await this.getAccount(this.minterFlowAddress);
-      const key = user.keys[this.minterAccountIndex];
+  authorizeMinter = () => async (account) => {
+    const user = await this.getAccount(this.minterFlowAddress);
+    const key = user.keys[this.minterAccountIndex];
 
-      const sign = this.signWithKey;
-      const pk = this.minterPrivateKeyHex;
+    const sign = this.signWithKey;
+    const pk = this.minterPrivateKeyHex;
 
-      return {
-        ...account,
-        tempId: `${user.address}-${key.index}`,
-        addr: fcl.sansPrefix(user.address),
+    return {
+      ...account,
+      tempId: `${user.address}-${key.index}`,
+      addr: fcl.sansPrefix(user.address),
+      keyId: Number(key.index),
+      signingFunction: (signable) => ({
+        addr: fcl.withPrefix(user.address),
         keyId: Number(key.index),
-        signingFunction: (signable) => {
-          return {
-            addr: fcl.withPrefix(user.address),
-            keyId: Number(key.index),
-            signature: sign(pk, signable.message),
-          };
-        },
-      };
+        signature: sign(pk, signable.message),
+      }),
     };
   };
 
-  getAccount = async (addr) => {
+  static getAccount = async (addr) => {
     const { account } = await fcl.send([fcl.getAccount(addr)]);
     return account;
   };
 
   signWithKey = (privateKey, msg) => {
-    const key = ec.keyFromPrivate(Buffer.from(privateKey, "hex"));
+    const key = ec.keyFromPrivate(Buffer.from(privateKey, 'hex'));
     const sig = key.sign(this.hashMsg(msg));
     const n = 32;
-    const r = sig.r.toArrayLike(Buffer, "be", n);
-    const s = sig.s.toArrayLike(Buffer, "be", n);
-    return Buffer.concat([r, s]).toString("hex");
+    const r = sig.r.toArrayLike(Buffer, 'be', n);
+    const s = sig.s.toArrayLike(Buffer, 'be', n);
+    return Buffer.concat([r, s]).toString('hex');
   };
 
-  hashMsg = (msg) => {
+  static hashMsg = (msg) => {
     const sha = new SHA3(256);
-    sha.update(Buffer.from(msg, "hex"));
+    sha.update(Buffer.from(msg, 'hex'));
     return sha.digest();
   };
 
-  sendTx = async ({
+  static sendTx = async ({
     transaction,
     args,
     proposer,
@@ -77,18 +74,19 @@ class FlowService {
     return await fcl.tx(response).onceSealed();
   };
 
-  async executeScript({ script, args }) {
+  static async executeScript({ script, args }) {
+    // eslint-disable-next-line no-return-await
     return await fcl.query({
       cadence: script,
       args: (_arg, _t) => args,
     });
   }
 
-  async getLatestBlockHeight() {
+  static async getLatestBlockHeight() {
     const block = await fcl.send([fcl.getBlock(true)]);
     const decoded = await fcl.decode(block);
     return decoded.height;
   }
 }
 
-export { FlowService };
+export default { FlowService };
